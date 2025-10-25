@@ -45,7 +45,8 @@ pico_generate_pio_header(picocrypt-fpv
 # ===== SENDER FIRMWARE =====
 add_executable(picocrypt_sender
     src/picocrypt_sender.c
-    src/crypto.c
+   
+ src/crypto.c
     src/video_input.c
     src/video_output.c
     src/pio_programs.c
@@ -84,7 +85,8 @@ add_executable(picocrypt_receiver
     src/picocrypt_receiver.c
     src/crypto.c
     src/video_input.c
-    src/video_output.c
+ 
+   src/video_output.c
     src/pio_programs.c
 )
 
@@ -126,7 +128,8 @@ add_executable(test_pattern_gen
 
 target_link_libraries(test_pattern_gen
     pico_stdlib
-    hardware_pio
+ 
+   hardware_pio
     hardware_dma
     hardware_clocks
 )
@@ -182,7 +185,8 @@ install(TARGETS
 # ===== CUSTOM TARGETS =====
 # Flash sender firmware
 add_custom_target(flash_sender
-    COMMAND ${CMAKE_COMMAND} -E copy 
+   
+ COMMAND ${CMAKE_COMMAND} -E copy 
         ${CMAKE_CURRENT_BINARY_DIR}/picocrypt_sender.uf2
         /media/$ENV{USER}/RP2040/
     DEPENDS picocrypt_sender
@@ -205,7 +209,8 @@ add_custom_target(clean_all
     COMMENT "Cleaning all build artifacts..."
 )
 
-# ===== PRINT BUILD INFO =====
+# 
+===== PRINT BUILD INFO =====
 message(STATUS "========================================")
 message(STATUS "PicoCrypt FPV Build Configuration")
 message(STATUS "========================================")
@@ -234,7 +239,8 @@ else()
 endif()
 
 # Option to enable test mode
-option(ENABLE_TEST_MODE "Enable test mode with known patterns" OFF)
+option(ENABLE_TEST_MODE "Enable 
+test mode with known patterns" OFF)
 if(ENABLE_TEST_MODE)
     add_compile_definitions(TEST_MODE=1)
     message(STATUS "Test mode enabled")
@@ -259,6 +265,7 @@ if(DOXYGEN)
         COMMAND ${DOXYGEN} ${DOXYGEN_OUT}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs
         COMMENT "Generating API documentation with Doxygen"
-        VERBATIM
+ 
+       VERBATIM
     )
 endif()

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PicoCrypt FPV - Komplette Projektanleitung</title>
+    <title>PicoCrypt FPV - Complete Project Guide</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -276,20 +276,20 @@
     <header>
         <div class="container">
             <h1><i class="fas fa-shield-alt"></i> PicoCrypt FPV</h1>
-            <p class="subtitle">Quelloffenes FPV-Videoverschlüsselungssystem mit Raspberry Pi Pico</p>
+            <p class="subtitle">Open-Source FPV Video Encryption System with Raspberry Pi Pico</p>
         </div>
     </header>
 
     <div class="container">
         <div class="toc">
-            <h2><i class="fas fa-list"></i> Inhaltsverzeichnis</h2>
+            <h2><i class="fas fa-list"></i> Table of Contents</h2>
             <ul>
-                <li><a href="#phase1">Phase 1: Hardware-Design und Komponentenauswahl</a></li>
-                <li><a href="#phase2">Phase 2: Proof of Concept 1 - Video-Ausgabe</a></li>
-                <li><a href="#phase3">Phase 3: Proof of Concept 2 - Video-Eingabe</a></li>
-                <li><a href="#phase4">Phase 4: Echtzeit-Passthrough</a></li>
-                <li><a href="#phase5">Phase 5: White Noise Stromchiffre</a></li>
-                <li><a href="#phase6">Phase 6: Finale Systemintegration</a></li>
+                <li><a href="#phase1">Phase 1: Hardware Design and Component Selection</a></li>
+                <li><a href="#phase2">Phase 2: Proof of Concept 1 - Video Output</a></li>
+                <li><a href="#phase3">Phase 3: Proof of Concept 2 - Video Input</a></li>
+                <li><a href="#phase4">Phase 4: Real-time Passthrough</a></li>
+                <li><a href="#phase5">Phase 5: White Noise Stream Cipher</a></li>
+                <li><a href="#phase6">Phase 6: Final System Integration</a></li>
             </ul>
         </div>
 
@@ -297,13 +297,13 @@
             <div class="phase-header">
                 <h2 class="phase-title">
                     <i class="fas fa-microchip phase-icon"></i>
-                    Phase 1: Hardware-Design und Komponentenauswahl
+                    Phase 1: Hardware Design and Component Selection
                 </h2>
-                <p>Grundlegende Hardware-Komponenten und Schaltungsdesign für das PicoCrypt FPV System</p>
+                <p>Basic hardware components and circuit design for the PicoCrypt FPV System</p>
             </div>
             <div class="phase-content">
                 <div class="section">
-                    <h3>1.1 Kernkomponenten und Spezifikationen</h3>
+                    <h3>1.1 Core Components and Specifications</h3>
                     
                     <div class="component-grid">
                         <div class="component-card">
@@ -313,67 +313,67 @@
                                 <strong>RAM:</strong> 264KB SRAM<br>
                                 <strong>Flash:</strong> 2MB<br>
                                 <strong>GPIO:</strong> 26 Pins, 3.3V Logic<br>
-                                <strong>Features:</strong> 8x PIO Zustandsmaschinen, DMA Controller
+                                <strong>Features:</strong> 8x PIO State Machines, DMA Controller
                             </div>
                         </div>
 
                         <div class="component-card">
-                            <div class="component-name"><i class="fas fa-wave-square"></i> Flash-ADC (z.B. AD9280)</div>
+                            <div class="component-name"><i class="fas fa-wave-square"></i> Flash-ADC (e.g., AD9280)</div>
                             <div class="component-specs">
-                                <strong>Typ:</strong> 8-bit Parallel Flash ADC<br>
-                                <strong>Sampling-Rate:</strong> Min. 10 MS/s<br>
-                                <strong>Auflösung:</strong> 8-bit (256 Stufen)<br>
-                                <strong>Eingang:</strong> 1Vpp Analog<br>
-                                <strong>Schnittstelle:</strong> Parallele 8-bit Ausgabe<br>
-                                <strong>Empfohlen:</strong> AD9280, AD9288
+                                <strong>Type:</strong> 8-bit Parallel Flash ADC<br>
+                                <strong>Sampling Rate:</strong> Min. 10 MS/s<br>
+                                <strong>Resolution:</strong> 8-bit (256 levels)<br>
+                                <strong>Input:</strong> 1Vpp Analog<br>
+                                <strong>Interface:</strong> Parallel 8-bit output<br>
+                                <strong>Recommended:</strong> AD9280, AD9288
                             </div>
                         </div>
 
                         <div class="component-card">
-                            <div class="component-name"><i class="fas fa-wave-square"></i> R-2R Widerstandsladder</div>
+                            <div class="component-name"><i class="fas fa-wave-square"></i> R-2R Resistor Ladder</div>
                             <div class="component-specs">
-                                <strong>Typ:</strong> 8-bit R-2R Netzwerk<br>
-                                <strong>Widerstände:</strong> R = 10kΩ, 2R = 20kΩ<br>
-                                <strong>Genauigkeit:</strong> 0.1% oder besser<br>
-                                <strong>Material:</strong> Metallfilm-Widerstände<br>
-                                <strong>Alternative:</strong> Integrierter R-2R DAC IC
+                                <strong>Type:</strong> 8-bit R-2R Network<br>
+                                <strong>Resistors:</strong> R = 10kΩ, 2R = 20kΩ<br>
+                                <strong>Accuracy:</strong> 0.1% or better<br>
+                                <strong>Material:</strong> Metal film resistors<br>
+                                <strong>Alternative:</strong> Integrated R-2R DAC IC
                             </div>
                         </div>
 
                         <div class="component-card">
-                            <div class="component-name"><i class="fas fa-bolt"></i> Operationsverstärker</div>
+                            <div class="component-name"><i class="fas fa-bolt"></i> Operational Amplifier</div>
                             <div class="component-specs">
-                                <strong>Typ:</strong> Video-Operationsverstärker<br>
-                                <strong>Bandbreite:</strong> >100MHz<br>
-                                <strong>Slew-Rate:</strong> >1000V/μs<br>
-                                <strong>Empfohlen:</strong> LMH6702, CLC409<br>
-                                <strong>Funktion:</strong> Signalkonditionierung, Puffer
+                                <strong>Type:</strong> Video Operational Amplifier<br>
+                                <strong>Bandwidth:</strong> >100MHz<br>
+                                <strong>Slew Rate:</strong> >1000V/μs<br>
+                                <strong>Recommended:</strong> LMH6702, CLC409<br>
+                                <strong>Function:</strong> Signal conditioning, Buffer
                             </div>
                         </div>
                     </div>
 
                     <div class="info-box">
-                        <strong><i class="fas fa-info-circle"></i> Wichtige Hinweise:</strong><br>
-                        Die Auswahl des ADC ist kritisch - er muss mindestens 10 MS/s sampling rate für PAL-Video (5MHz Bandbreite) bieten. Der R-2R DAC sollte präzise Widerstände (0.1% Toleranz) verwenden, um Linearitätsfehler zu minimieren.
+                        <strong><i class="fas fa-info-circle"></i> Important Notes:</strong><br>
+                        The choice of ADC is critical - it must offer at least a 10 MS/s sampling rate for PAL video (5MHz bandwidth). The R-2R DAC should use precision resistors (0.1% tolerance) to minimize linearity errors.
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3>1.2 Konzept-Schaltplan</h3>
+                    <h3>1.2 Concept Schematic</h3>
                     
                     <div class="circuit-diagram">
                         <pre>
-                                VIDEO EINGANG (CVBS)
+                                VIDEO INPUT (CVBS)
                                        |
                                        v
-                            [AC-Koppelkondensator]
+                            [AC Coupling Capacitor]
                                        |
                                        v
-                            [Op-Amp Puffer/Verstärker]
-                            (LMH6702 - Eingangskonditionierung)
+                            [Op-Amp Buffer/Amplifier]
+                            (LMH6702 - Input Conditioning)
                                        |
                                        v
-                            [DC-Offset/Level-Shifter]
+                            [DC Offset/Level Shifter]
                                        |
                                        v
                             [Anti-Aliasing Filter]
@@ -389,62 +389,62 @@
                             +---------------------+
                                        |
                                        v
-                            [RP2040 GPIO Eingang]
-                            (8 parallele Datenleitungen)
+                            [RP2040 GPIO Input]
+                            (8 parallel data lines)
                                        |
                                        v
                             +---------------------+
                             |   Raspberry Pi Pico |
                             |     (RP2040)        |
                             |                     |
-                            | Core 0: Sync-Erkennung |
-                            | Core 1: Verarbeitung  |
-                            | PIO: Timing-Steuerung |
-                            | DMA: Datentransfer    |
+                            | Core 0: Sync Detection |
+                            | Core 1: Processing   |
+                            | PIO: Timing Control  |
+                            | DMA: Data Transfer   |
                             +---------------------+
                                        |
                                        v
-                            [RP2040 GPIO Ausgang]
-                            (8 parallele Datenleitungen)
+                            [RP2040 GPIO Output]
+                            (8 parallel data lines)
                                        |
                                        v
                             +---------------------+
                             |     R-2R DAC        |
-                            |   (Widerstandsladder)|
+                            |  (Resistor Ladder)  |
                             |                     |
                             | Digital In ------> Analog Out
                             | (8-bit)             |
                             +---------------------+
                                        |
                                        v
-                            [Op-Amp Puffer/Filter]
-                            (LMH6702 - Ausgangsstufe)
+                            [Op-Amp Buffer/Filter]
+                            (LMH6702 - Output Stage)
                                        |
                                        v
-                            [Video-Verstärker]
-                            (75Ω Anpassung)
+                            [Video Amplifier]
+                            (75Ω Matching)
                                        |
                                        v
-                                VIDEO AUSGANG
+                                VIDEO OUTPUT
                         </pre>
                     </div>
 
                     <div class="warning-box">
-                        <strong><i class="fas fa-exclamation-triangle"></i> Kritische Verbindungen:</strong><br>
-                        - Alle 8 Datenleitungen müssen gleich lang und parallel verlaufen<br>
-                        - Ground-Plane für minimales Rauschen<br>
-                        - Getrennte Versorgungen für Analog- und Digital-Schaltung<br>
-                        - Kurze Leitungen zwischen ADC und R-2R DAC
+                        <strong><i class="fas fa-exclamation-triangle"></i> Critical Connections:</strong><br>
+                        - All 8 data lines must have equal length and run in parallel<br>
+                        - Ground plane for minimal noise<br>
+                        - Separate supplies for analog and digital circuits<br>
+                        - Short traces between ADC and R-2R DAC
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3>1.3 Signalkonditionierung und Op-Amp Schaltungen</h3>
+                    <h3>1.3 Signal Conditioning and Op-Amp Circuits</h3>
                     
-                    <h4>Eingangsstufe (ADC-Vorverstärker):</h4>
+                    <h4>Input Stage (ADC Pre-amplifier):</h4>
                     <div class="code-block">
                         <pre>
-Eingangssignal: CVBS (1Vpp, 75Ω System)
+Input Signal: CVBS (1Vpp, 75Ω system)
     |
     +--[DC-Block C1]--+--[R1]--+--[Op-Amp (+)]--+
     |                 |        |               |
@@ -454,20 +454,20 @@ Eingangssignal: CVBS (1Vpp, 75Ω System)
     +----------------------------------------+
     |
     v
-Angepasstes Signal (0-1V für ADC)
+Adjusted Signal (0-1V for ADC)
 
-Komponenten:
-- C1: 10μF Keramik (DC-Entkopplung)
-- R1, R2: 1kΩ (Eingangsteiler)
-- R3: 1kΩ (Bias-Widerstand)
-- Op-Amp: LMH6702 (1.7GHz Bandbreite)
+Components:
+- C1: 10μF Ceramic (DC decoupling)
+- R1, R2: 1kΩ (Input divider)
+- R3: 1kΩ (Bias resistor)
+- Op-Amp: LMH6702 (1.7GHz Bandwidth)
                         </pre>
                     </div>
 
-                    <h4>Ausgangsstufe (DAC-Puffer):</h4>
+                    <h4>Output Stage (DAC Buffer):</h4>
                     <div class="code-block">
                         <pre>
-R-2R DAC Ausgang
+R-2R DAC Output
     |
     +--[Op-Amp (+)]--+--[R4]--+--[Video Out]
     |               |        |
@@ -476,19 +476,19 @@ R-2R DAC Ausgang
     +--[Op-Amp (-)]--+        [GND]
     |
     v
-Gepuffertes Video-Signal
+Buffered Video Signal
 
-Komponenten:
-- R4: 1kΩ (Serienwiderstand)
-- R5: 1kΩ (Rückkopplung)
-- R6: 75Ω (Anpassung auf 75Ω System)
-- Op-Amp: LMH6702 (80mA Ausgangsstrom)
+Components:
+- R4: 1kΩ (Series resistor)
+- R5: 1kΩ (Feedback)
+- R6: 75Ω (Matching to 75Ω system)
+- Op-Amp: LMH6702 (80mA output current)
                         </pre>
                     </div>
 
                     <div class="info-box">
-                        <strong><i class="fas fa-lightbulb"></i> Design-Überlegungen:</strong><br>
-                        Der LMH6702 bietet 1.7GHz Bandbreite und 3100V/μs Slew-Rate, was für Video-Anwendungen optimal ist. Die 80mA Ausgangsstromstärke reicht für 75Ω Lasten. Wichtig ist eine getrennte Ground-Plane für Analog- und Digital-Signale.
+                        <strong><i class="fas fa-lightbulb"></i> Design Considerations:</strong><br>
+                        The LMH6702 offers 1.7GHz bandwidth and a 3100V/μs slew rate, which is optimal for video applications. The 80mA output current is sufficient for 75Ω loads. A separate ground plane for analog and digital signals is important.
                     </div>
                 </div>
             </div>
@@ -498,36 +498,36 @@ Komponenten:
             <div class="phase-header">
                 <h2 class="phase-title">
                     <i class="fas fa-play phase-icon"></i>
-                    Phase 2: Proof of Concept 1 - Video-Ausgabe
+                    Phase 2: Proof of Concept 1 - Video Output
                 </h2>
-                <p>Erzeugung eines stabilen CVBS-Testbildes mit R-2R DAC und PIO-Timing</p>
+                <p>Generating a stable CVBS test pattern with R-2R DAC and PIO timing</p>
             </div>
             <div class="phase-content">
                 <div class="section">
-                    <h3>2.1 Ziel und Architektur</h3>
-                    <p>Erzeugung eines stabilen Farbbalken-Testbildes als CVBS-Signal über einen R-2R DAC. Die PIO-Zustandsmaschine übernimmt das präzise Timing von H-Sync, V-Sync und Videodaten.</p>
+                    <h3>2.1 Goal and Architecture</h3>
+                    <p>Generate a stable color bar test pattern as a CVBS signal via an R-2R DAC. The PIO state machine handles the precise timing of H-Sync, V-Sync, and video data.</p>
 
                     <div class="success-box">
-                        <strong><i class="fas fa-check-circle"></i> Erfolgskriterien:</strong><br>
-                        - Stabiles PAL/NTSC-Signal (25/30fps)<br>
-                        - Korrekte Sync-Impulse (4.7μs H-Sync, 160μs V-Sync)<br>
-                        - Saubere Farbbalken-Generierung<br>
-                        - <20ms Gesamtlatenz
+                        <strong><i class="fas fa-check-circle"></i> Success Criteria:</strong><br>
+                        - Stable PAL/NTSC signal (25/30fps)<br>
+                        - Correct sync pulses (4.7μs H-Sync, 160μs V-Sync)<br>
+                        - Clean color bar generation<br>
+                        - <20ms total latency
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3>2.2 PIO-Programm für Video-Timing</h3>
+                    <h3>2.2 PIO Program for Video Timing</h3>
                     <div class="code-block">
                         <pre>
-; PIO-Programm für Video-Sync-Generierung
-; Erzeugt H-Sync und V-Sync Impulse nach PAL-Standard
+; PIO program for video sync generation
+; Generates H-Sync and V-Sync pulses according to PAL standard
 
 .program video_sync
 .side_set 1
 
-; Konstanten für PAL-Video
-H_SYNC_PULSE    = 96    ; 4.7μs bei 20.25MHz
+; Constants for PAL video
+H_SYNC_PULSE    = 96    ; 4.7μs at 20.25MHz
 H_BACK_PORCH    = 48    ; 2.35μs
 H_ACTIVE_VIDEO  = 640   ; 31.5μs
 H_FRONT_PORCH   = 12    ; 0.6μs
@@ -537,41 +537,41 @@ V_ACTIVE_LINES  = 576   ; 18.432ms
 V_FRONT_PORCH   = 4     ; 128μs
 
 start:
-    ; H-Sync Puls generieren
-    set pins, 0           ; Sync-Pegel (0V)
+    ; Generate H-Sync pulse
+    set pins, 0           ; Sync level (0V)
     set x, H_SYNC_PULSE   
 hsync_loop:
-    nop [31]              ; 1 Taktausführung
-    jmp x--, hsync_loop   ; Schleife für H-Sync-Dauer
+    nop [31]              ; 1 clock execution
+    jmp x--, hsync_loop   ; Loop for H-Sync duration
     
     ; Back Porch
-    set pins, 1           ; Blank-Pegel (0.3V)
+    set pins, 1           ; Blank level (0.3V)
     set x, H_BACK_PORCH
 back_porch_loop:
     nop [31]
     jmp x--, back_porch_loop
     
-    ; Aktive Video-Zeit
-    set pins, 2           ; Video-Pegel (0.7V)
+    ; Active Video Time
+    set pins, 2           ; Video level (0.7V)
     set x, H_ACTIVE_VIDEO
 video_loop:
     nop [31]
     jmp x--, video_loop
     
     ; Front Porch
-    set pins, 1           ; Blank-Pegel
+    set pins, 1           ; Blank level
     set x, H_FRONT_PORCH
 front_porch_loop:
     nop [31]
     jmp x--, front_porch_loop
     
-    jmp start             ; Nächste Zeile
+    jmp start             ; Next line
                         </pre>
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3>2.3 C-Code für Testbild-Generator</h3>
+                    <h3>2.3 C-Code for Test Pattern Generator</h3>
                     <div class="code-block">
                         <pre>
 #include "pico/stdlib.h"
@@ -579,36 +579,36 @@ front_porch_loop:
 #include "hardware/dma.h"
 #include "hardware/clocks.h"
 
-// Video-Konstanten
+// Video constants
 #define VIDEO_WIDTH     720
 #define VIDEO_HEIGHT    576
-#define PIXEL_CLOCK     13500000  // 13.5MHz für PAL
+#define PIXEL_CLOCK     13500000  // 13.5MHz for PAL
 
-// Farbbalken-Pattern (8-bit Werte für R-2R DAC)
+// Color bar pattern (8-bit values for R-2R DAC)
 const uint8_t color_bars[8] = {
-    0xFF,  // Weiß
-    0xE0,  // Gelb
+    0xFF,  // White
+    0xE0,  // Yellow
     0x1C,  // Cyan
-    0x00,  // Grün
+    0x00,  // Green
     0x03,  // Magenta
-    0x1F,  // Rot
-    0xFC,  // Blau
-    0x80   // Schwarz
+    0x1F,  // Red
+    0xFC,  // Blue
+    0x80   // Black
 };
 
-// PIO-Programm initialisieren
+// Initialize PIO program
 void init_video_pio(PIO pio, uint sm) {
     uint offset = pio_add_program(pio, &video_sync_program);
     
     pio_sm_config c = video_sync_program_get_default_config(offset);
     
-    // Setze Clock-Divider für 20.25MHz (PAL Pixel-Clock)
+    // Set clock divider for 20.25MHz (PAL Pixel-Clock)
     float div = (float)clock_get_hz(clk_sys) / 20250000.0;
     sm_config_set_clkdiv(&c, div);
     
-    // Konfiguriere GPIO-Pins
-    sm_config_set_set_pins(&c, 0, 3);  // 3 Pins für Video-Level
-    sm_config_set_sideset_pins(&c, 3); // 1 Pin für H-Sync
+    // Configure GPIO pins
+    sm_config_set_set_pins(&c, 0, 3);  // 3 pins for video level
+    sm_config_set_sideset_pins(&c, 3); // 1 pin for H-Sync
     
     pio_gpio_init(pio, 0);
     pio_gpio_init(pio, 1);
@@ -624,7 +624,7 @@ void init_video_pio(PIO pio, uint sm) {
     pio_sm_set_enabled(pio, sm, true);
 }
 
-// DMA-Konfiguration für Video-Daten
+// DMA configuration for video data
 void init_video_dma(uint dma_chan, uint8_t* video_buffer) {
     dma_channel_config c = dma_channel_get_default_config(dma_chan);
     
@@ -632,7 +632,7 @@ void init_video_dma(uint dma_chan, uint8_t* video_buffer) {
     channel_config_set_read_increment(&c, true);
     channel_config_set_write_increment(&c, false);
     
-    // DMA-Trigger von PIO
+    // DMA trigger from PIO
     channel_config_set_dreq(&c, DREQ_PIO0_TX0);
     
     dma_channel_configure(
@@ -645,7 +645,7 @@ void init_video_dma(uint dma_chan, uint8_t* video_buffer) {
     );
 }
 
-// Farbbalken-Pattern generieren
+// Generate color bar pattern
 void generate_color_bars(uint8_t* buffer) {
     for (int y = 0; y < VIDEO_HEIGHT; y++) {
         for (int x = 0; x < VIDEO_WIDTH; x++) {
@@ -662,25 +662,25 @@ void generate_color_bars(uint8_t* buffer) {
 int main() {
     stdio_init_all();
     
-    // Video-Buffer allozieren
+    // Allocate video buffer
     uint8_t* video_buffer = (uint8_t*)malloc(VIDEO_WIDTH * VIDEO_HEIGHT);
     
-    // Farbbalken generieren
+    // Generate color bars
     generate_color_bars(video_buffer);
     
-    // PIO initialisieren
+    // Initialize PIO
     PIO pio = pio0;
     uint sm = 0;
     init_video_pio(pio, sm);
     
-    // DMA initialisieren
+    // Initialize DMA
     uint dma_chan = dma_claim_unused_channel(true);
     init_video_dma(dma_chan, video_buffer);
     
-    // DMA starten
+    // Start DMA
     dma_channel_start(dma_chan);
     
-    // Hauptschleife
+    // Main loop
     while (true) {
         tight_loop_contents();
     }
@@ -691,31 +691,31 @@ int main() {
                     </div>
 
                     <div class="info-box">
-                        <strong><i class="fas fa-cogs"></i> PIO-Erklärung:</strong><br>
-                        Die PIO-Zustandsmaschine erzeugt präzise Video-Timing ohne CPU-Intervention. Das DMA-System überträgt die Video-Daten direkt aus dem Speicher in die R-2R DAC-Leitung. Die CPU ist nur für die Initialisierung verantwortlich.
+                        <strong><i class="fas fa-cogs"></i> PIO Explanation:</strong><br>
+                        The PIO state machine generates precise video timing without CPU intervention. The DMA system transfers video data directly from memory to the R-2R DAC line. The CPU is only responsible for initialization.
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3>2.4 Timing-Berechnungen</h3>
+                    <h3>2.4 Timing Calculations</h3>
                     <div class="code-block">
                         <pre>
-PAL-Video Timing (720x576 @ 25fps):
+PAL Video Timing (720x576 @ 25fps):
 
-Zeilendauer: 64μs
+Line Duration: 64μs
 - H-Sync: 4.7μs (96 Clocks @ 20.25MHz)
 - Back Porch: 5.7μs (116 Clocks)
-- Aktive Video: 52μs (1053 Clocks)
+- Active Video: 52μs (1053 Clocks)
 - Front Porch: 1.6μs (32 Clocks)
 
-Bilddauer: 20ms (312.5 Zeilen)
-- V-Sync: 160μs (5 Zeilen)
-- Back Porch: 1.152ms (36 Zeilen)
-- Aktives Bild: 18.432ms (576 Zeilen)
-- Front Porch: 0.256ms (4 Zeilen)
+Frame Duration: 20ms (312.5 lines)
+- V-Sync: 160μs (5 lines)
+- Back Porch: 1.152ms (36 lines)
+- Active Frame: 18.432ms (576 lines)
+- Front Porch: 0.256ms (4 lines)
 
-Pixel-Clock: 13.5MHz (für 720 aktive Pixel)
-PIO-Clock: 20.25MHz (für komplette Zeile mit Sync)
+Pixel Clock: 13.5MHz (for 720 active pixels)
+PIO Clock: 20.25MHz (for a complete line with sync)
                         </pre>
                     </div>
                 </div>
@@ -726,61 +726,61 @@ PIO-Clock: 20.25MHz (für komplette Zeile mit Sync)
             <div class="phase-header">
                 <h2 class="phase-title">
                     <i class="fas fa-eye phase-icon"></i>
-                    Phase 3: Proof of Concept 2 - Video-Eingabe
+                    Phase 3: Proof of Concept 2 - Video Input
                 </h2>
-                <p>ADC-basierte Videosignalerfassung und Synchronisationsimpulserkennung</p>
+                <p>ADC-based video signal acquisition and synchronization pulse detection</p>
             </div>
             <div class="phase-content">
                 <div class="section">
-                    <h3>3.1 Ziel und Architektur</h3>
-                    <p>Erfassung eines analogen CVBS-Signals über einen Flash-ADC und Erkennung der Video-Synchronisationsimpulse für die spätere Verschlüsselung.</p>
+                    <h3>3.1 Goal and Architecture</h3>
+                    <p>Capture an analog CVBS signal via a Flash ADC and detect the video synchronization pulses for later encryption.</p>
 
                     <div class="warning-box">
-                        <strong><i class="fas fa-exclamation-triangle"></i> Kritische Anforderungen:</strong><br>
-                        - Präzise Sync-Impulserkennung (±0.1μs)<br>
-                        - Minimale Verarbeitungslatenz (<1μs)<br>
-                        - Stabile Datenaufnahme bei 10MS/s<br>
-                        - Korrekte V-Sync-Resynchronisation
+                        <strong><i class="fas fa-exclamation-triangle"></i> Critical Requirements:</strong><br>
+                        - Precise sync pulse detection (±0.1μs)<br>
+                        - Minimal processing latency (<1μs)<br>
+                        - Stable data acquisition at 10MS/s<br>
+                        - Correct V-Sync resynchronization
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3>3.2 PIO-Programm für Sync-Erkennung</h3>
+                    <h3>3.2 PIO Program for Sync Detection</h3>
                     <div class="code-block">
                         <pre>
-; PIO-Programm für Video-Sync-Erkennung
-; Erkennt H-Sync und V-Sync Impulse vom ADC
+; PIO program for video sync detection
+; Detects H-Sync and V-Sync pulses from the ADC
 
 .program video_sync_detect
 
-; Sync-Detektion State Machine
+; Sync detection state machine
 start:
-    ; Warte auf Video-Signal vom ADC
-    wait 0 pin 0        ; Warte auf Sync-Pegel
+    ; Wait for video signal from ADC
+    wait 0 pin 0        ; Wait for sync level
     
-    ; H-Sync-Erkennung
+    ; H-Sync detection
     set x, 0
 h_sync_measure:
-    jmp pin, h_sync_end ; Ende des H-Sync erreicht
+    jmp pin, h_sync_end ; End of H-Sync reached
     jmp x--, h_sync_measure
     
 h_sync_end:
-    ; H-Sync-Dauer in x gespeichert
+    ; H-Sync duration stored in x
     mov isr, x
     push
     
-    ; Warte auf nächstes Signal
+    ; Wait for next signal
     wait 1 pin 0
     jmp start
     
-    ; V-Sync-Detektion (längerer Impuls)
-    ; Wird durch Software überprüft
+    ; V-Sync detection (longer pulse)
+    ; Will be checked by software
                         </pre>
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3>3.3 C-Code für Video-Eingabe</h3>
+                    <h3>3.3 C-Code for Video Input</h3>
                     <div class="code-block">
                         <pre>
 #include "pico/stdlib.h"
@@ -788,13 +788,13 @@ h_sync_end:
 #include "hardware/dma.h"
 #include "hardware/adc.h"
 
-// Video-Eingabe-Konfiguration
-#define ADC_PIN         26      // ADC-Eingang
+// Video input configuration
+#define ADC_PIN         26      // ADC input
 #define VIDEO_WIDTH     720
 #define VIDEO_HEIGHT    576
 #define SAMPLE_RATE     10000000 // 10MS/s
 
-// Video-Sync-Struktur
+// Video sync structure
 typedef struct {
     uint32_t h_sync_pos;
     uint32_t v_sync_pos;
@@ -803,80 +803,80 @@ typedef struct {
     uint32_t line_counter;
 } video_sync_t;
 
-// Globale Variablen
+// Global variables
 static video_sync_t video_sync;
 static uint8_t video_line_buffer[VIDEO_WIDTH];
 static uint8_t* current_line_ptr = video_line_buffer;
 
-// ADC-Initialisierung
+// ADC initialization
 void init_adc(void) {
     adc_init();
     adc_gpio_init(ADC_PIN);
-    adc_select_input(0);  // ADC-Kanal 0
+    adc_select_input(0);  // ADC channel 0
     
-    // ADC auf maximale Geschwindigkeit setzen
-    adc_set_clkdiv(0);  // Kein Teiler = max Speed
+    // Set ADC to maximum speed
+    adc_set_clkdiv(0);  // No divider = max speed
 }
 
-// DMA-Initialisierung für ADC-Daten
+// DMA initialization for ADC data
 void init_adc_dma(uint dma_chan, uint8_t* buffer) {
     dma_channel_config c = dma_channel_get_default_config(dma_chan);
     
     channel_config_set_transfer_data_size(&c, DMA_SIZE_8);
-    channel_config_set_read_increment(&c, false);   // ADC-FIFO ist fest
-    channel_config_set_write_increment(&c, true);   // Buffer-Adresse erhöhen
+    channel_config_set_read_increment(&c, false);   // ADC FIFO is fixed
+    channel_config_set_write_increment(&c, true);   // Increment buffer address
     
-    // ADC-FIFO als Quelle
+    // ADC FIFO as source
     channel_config_set_dreq(&c, DREQ_ADC);
     
     dma_channel_configure(
         dma_chan,
         &c,
-        buffer,              // Ziel-Buffer
-        &adc_hw->fifo,       // ADC-FIFO Quelle
-        VIDEO_WIDTH,         // Anzahl der Samples
-        false                // Noch nicht starten
+        buffer,              // Destination buffer
+        &adc_hw->fifo,       // ADC FIFO source
+        VIDEO_WIDTH,         // Number of samples
+        false                // Do not start yet
     );
 }
 
-// H-Sync-Interrupt-Handler
+// H-Sync interrupt handler
 void h_sync_handler(void) {
-    // Neue Zeile beginnt
+    // New line begins
     video_sync.h_sync_detected = true;
     video_sync.line_counter++;
     
-    // DMA für neue Zeile starten
+    // Start DMA for new line
     if (video_sync.line_counter < VIDEO_HEIGHT) {
         dma_channel_start(ADC_DMA_CHAN);
     }
 }
 
-// V-Sync-Interrupt-Handler
+// V-Sync interrupt handler
 void v_sync_handler(void) {
-    // Neues Frame beginnt
+    // New frame begins
     video_sync.v_sync_detected = true;
     video_sync.line_counter = 0;
     video_sync.v_sync_pos = time_us_32();
     
-    // PRNG für neue Verschlüsselung zurücksetzen
+    // Reset PRNG for new encryption
     reset_encryption_prng();
 }
 
-// Video-Sync-Erkennung
+// Video sync detection
 void detect_video_sync(void) {
-    // Nutze PIO für präzise Sync-Messung
+    // Use PIO for precise sync measurement
     PIO pio = pio0;
     uint sm = 0;
     
-    // PIO-Programm laden
+    // Load PIO program
     uint offset = pio_add_program(pio, &video_sync_detect_program);
     pio_sm_config c = video_sync_detect_program_get_default_config(offset);
     
-    // GPIO für Sync-Eingang konfigurieren
+    // Configure GPIO for sync input
     pio_gpio_init(pio, ADC_PIN);
     gpio_set_function(ADC_PIN, GPIO_FUNC_PIO0);
     
-    // State Machine konfigurieren
+    // Configure state machine
     sm_config_set_in_pins(&c, ADC_PIN);
     sm_config_set_jmp_pin(&c, ADC_PIN);
     
@@ -884,21 +884,21 @@ void detect_video_sync(void) {
     pio_sm_set_enabled(pio, sm, true);
 }
 
-// Haupt-Verarbeitungsschleife
+// Main processing loop
 void video_input_loop(void) {
     while (true) {
-        // Warte auf H-Sync
+        // Wait for H-Sync
         if (video_sync.h_sync_detected) {
             video_sync.h_sync_detected = false;
             
-            // Verarbeite empfangene Zeile
+            // Process received line
             process_video_line(video_line_buffer, VIDEO_WIDTH);
             
-            // Zeilen-Buffer zurücksetzen
+            // Reset line buffer pointer
             current_line_ptr = video_line_buffer;
         }
         
-        // V-Sync-Behandlung
+        // V-Sync handling
         if (video_sync.v_sync_detected) {
             video_sync.v_sync_detected = false;
             handle_new_frame();
@@ -906,15 +906,15 @@ void video_input_loop(void) {
     }
 }
 
-// Video-Zeile verarbeiten
+// Process video line
 void process_video_line(uint8_t* line_data, uint length) {
-    // Hier wird später die Verschlüsselung eingefügt
-    // Aktuell: Direkte Weiterleitung zum Ausgang
+    // Encryption will be added here later
+    // Currently: Direct passthrough to output
     
-    // Warte auf Ausgabe-Buffer
+    // Wait for output buffer
     while (!output_buffer_ready());
     
-    // Daten in Ausgabe-Buffer kopieren
+    // Copy data to output buffer
     memcpy(output_buffer, line_data, length);
     output_buffer_ready_flag = false;
 }
@@ -922,12 +922,12 @@ void process_video_line(uint8_t* line_data, uint length) {
 int main() {
     stdio_init_all();
     
-    // Initialisierungen
+    // Initializations
     init_adc();
     init_adc_dma(ADC_DMA_CHAN, video_line_buffer);
     detect_video_sync();
     
-    // Video-Eingabe starten
+    // Start video input
     video_input_loop();
     
     return 0;
@@ -937,10 +937,10 @@ int main() {
                 </div>
 
                 <div class="section">
-                    <h3>3.4 DMA-Streaming für Echtzeit-Verarbeitung</h3>
+                    <h3>3.4 DMA Streaming for Real-time Processing</h3>
                     <div class="code-block">
                         <pre>
-// Double-Buffer-Konfiguration für nahtlose Verarbeitung
+// Double-buffer configuration for seamless processing
 typedef struct {
     uint8_t buffer_a[VIDEO_WIDTH];
     uint8_t buffer_b[VIDEO_WIDTH];
@@ -952,7 +952,7 @@ typedef struct {
 
 static double_buffer_t video_buffers;
 
-// Double-Buffer-Initialisierung
+// Double-buffer initialization
 void init_double_buffer(void) {
     video_buffers.active_buffer = video_buffers.buffer_a;
     video_buffers.processing_buffer = video_buffers.buffer_b;
@@ -960,9 +960,9 @@ void init_double_buffer(void) {
     video_buffers.buffer_b_ready = false;
 }
 
-// DMA-Transfer-Complete Interrupt
+// DMA transfer complete interrupt
 void dma_transfer_complete(void) {
-    // Buffer wechseln
+    // Swap buffers
     if (video_buffers.active_buffer == video_buffers.buffer_a) {
         video_buffers.buffer_a_ready = true;
         video_buffers.active_buffer = video_buffers.buffer_b;
@@ -974,10 +974,10 @@ void dma_transfer_complete(void) {
     }
 }
 
-// Verarbeitungsschleife mit Double-Buffering
+// Processing loop with double-buffering
 void process_with_double_buffer(void) {
     while (true) {
-        // Prüfe ob neuer Buffer bereit
+        // Check if a new buffer is ready
         if (video_buffers.buffer_a_ready) {
             video_buffers.processing_buffer = video_buffers.buffer_a;
             video_buffers.buffer_a_ready = false;
@@ -995,8 +995,8 @@ void process_with_double_buffer(void) {
                     </div>
 
                     <div class="info-box">
-                        <strong><i class="fas fa-clock"></i> Timing-Kritisch:</strong><br>
-                        Mit 10MS/s Sampling-Rate hat jede Zeile 720 Samples = 72μs Zeit für Verarbeitung. Das Double-Buffer-System ermöglicht nahtlose Verarbeitung ohne Datenverlust.
+                        <strong><i class="fas fa-clock"></i> Timing Critical:</strong><br>
+                        With a 10MS/s sampling rate, each line has 720 samples = 72μs for processing. The double-buffer system enables seamless processing without data loss.
                     </div>
                 </div>
             </div>
@@ -1006,46 +1006,46 @@ void process_with_double_buffer(void) {
             <div class="phase-header">
                 <h2 class="phase-title">
                     <i class="fas fa-exchange-alt phase-icon"></i>
-                    Phase 4: Echtzeit-Passthrough
+                    Phase 4: Real-time Passthrough
                 </h2>
-                <p>Kombination von Video-Eingabe und -Ausgabe mit minimaler Latenz</p>
+                <p>Combining video input and output with minimal latency</p>
             </div>
             <div class="phase-content">
                 <div class="section">
-                    <h3>4.1 Ziel: Zeilenweise Verarbeitung</h3>
-                    <p>Kombination der vorherigen Phasen zu einem System, das Video zeilenweise einliest und sofort wieder ausgibt, ohne Verschlüsselung.</p>
+                    <h3>4.1 Goal: Line-by-Line Processing</h3>
+                    <p>Combine the previous phases into a system that reads video line by line and immediately outputs it, without encryption.</p>
 
                     <div class="success-box">
-                        <strong><i class="fas fa-target"></i> Performance-Ziele:</strong><br>
-                        - Gesamtlatenz: <1ms pro Zeile<br>
-                        - CPU-Auslastung: <50% (beide Cores)<br>
-                        - Kein Frame-Drop bei 25fps<br>
-                        - Nahtlose Datenübertragung
+                        <strong><i class="fas fa-target"></i> Performance Goals:</strong><br>
+                        - Total latency: <1ms per line<br>
+                        - CPU load: <50% (both cores)<br>
+                        - No frame drops at 25fps<br>
+                        - Seamless data transfer
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3>4.2 Dual-Core-Architektur</h3>
+                    <h3>4.2 Dual-Core Architecture</h3>
                     <div class="code-block">
                         <pre>
-// Dual-Core-Konfiguration für optimale Performance
+// Dual-core configuration for optimal performance
 #include "pico/multicore.h"
 
-// Core 0: Video-Eingabe und Sync-Verarbeitung
+// Core 0: Video input and sync processing
 void core0_video_input(void) {
     while (true) {
-        // Warte auf H-Sync
+        // Wait for H-Sync
         if (h_sync_detected) {
             h_sync_detected = false;
             
-            // Neue Zeile vom ADC einlesen
+            // Read new line from ADC
             read_video_line(input_buffer);
             
-            // Signal für Core 1 senden
+            // Send signal to Core 1
             multicore_fifo_push_blocking(input_buffer);
         }
         
-        // V-Sync-Behandlung
+        // V-Sync handling
         if (v_sync_detected) {
             v_sync_detected = false;
             reset_line_counter();
@@ -1054,37 +1054,37 @@ void core0_video_input(void) {
     }
 }
 
-// Core 1: Video-Ausgabe und DAC-Steuerung
+// Core 1: Video output and DAC control
 void core1_video_output(void) {
     while (true) {
-        // Warte auf Daten von Core 0
+        // Wait for data from Core 0
         uint32_t data = multicore_fifo_pop_blocking();
         
         if (data == VSYNC_MARKER) {
-            // V-Sync behandeln
+            // Handle V-Sync
             handle_vsync_output();
         } else {
-            // Video-Zeile ausgeben
+            // Output video line
             uint8_t* line_buffer = (uint8_t*)data;
             output_video_line(line_buffer);
         }
     }
 }
 
-// Hauptprogramm-Initialisierung
+// Main program initialization
 int main() {
     stdio_init_all();
     
-    // Initialisierungen
+    // Initializations
     init_adc();
     init_dac();
     init_pio();
     init_dma();
     
-    // Core 1 starten (Video-Ausgabe)
+    // Start Core 1 (Video Output)
     multicore_launch_core1(core1_video_output);
     
-    // Core 0: Video-Eingabe
+    // Core 0: Video Input
     core0_video_input();
     
     return 0;
@@ -1094,10 +1094,10 @@ int main() {
                 </div>
 
                 <div class="section">
-                    <h3>4.3 Puffer-Strategie und Latenz-Management</h3>
+                    <h3>4.3 Buffer Strategy and Latency Management</h3>
                     <div class="code-block">
                         <pre>
-// Tripel-Buffer-System für minimale Latenz
+// Triple-buffer system for minimal latency
 typedef struct {
     uint8_t buffer[3][VIDEO_WIDTH];
     uint8_t read_index;
@@ -1109,7 +1109,7 @@ typedef struct {
 
 static triple_buffer_t video_pipeline;
 
-// Buffer-Verwaltung initialisieren
+// Initialize buffer management
 void init_triple_buffer(void) {
     video_pipeline.read_index = 0;
     video_pipeline.write_index = 1;
@@ -1122,7 +1122,7 @@ void init_triple_buffer(void) {
     mutex_init(&video_pipeline.buffer_mutex);
 }
 
-// Neue Zeile in Buffer schreiben (Core 0)
+// Write new line to buffer (Core 0)
 void write_video_line(uint8_t* data) {
     mutex_enter_blocking(&video_pipeline.buffer_mutex);
     
@@ -1130,13 +1130,13 @@ void write_video_line(uint8_t* data) {
            data, VIDEO_WIDTH);
     video_pipeline.buffer_ready[video_pipeline.write_index] = true;
     
-    // Buffer-Indizes rotieren
+    // Rotate buffer indices
     video_pipeline.write_index = (video_pipeline.write_index + 1) % 3;
     
     mutex_exit(&video_pipeline.buffer_mutex);
 }
 
-// Verarbeitete Zeile aus Buffer lesen (Core 1)
+// Read processed line from buffer (Core 1)
 uint8_t* read_video_line(void) {
     uint8_t* result = NULL;
     
@@ -1153,14 +1153,14 @@ uint8_t* read_video_line(void) {
     return result;
 }
 
-// Latenz-Messung
+// Latency measurement
 void measure_latency(void) {
     static uint32_t last_timestamp = 0;
     uint32_t current_timestamp = time_us_32();
     
     if (last_timestamp != 0) {
         uint32_t latency = current_timestamp - last_timestamp;
-        printf("Zeilen-Latenz: %d μs\n", latency);
+        printf("Line Latency: %d μs\n", latency);
     }
     
     last_timestamp = current_timestamp;
@@ -1169,52 +1169,52 @@ void measure_latency(void) {
                     </div>
 
                     <div class="info-box">
-                        <strong><i class="fas fa-tachometer-alt"></i> Performance-Optimierung:</strong><br>
-                        Das Tripel-Buffer-System ermöglicht gleichzeitiges Lesen, Verarbeiten und Schreiben. Die Latenz beträgt maximal 1 Zeile (64μs) plus Verarbeitungszeit. Mit DMA-Transfer und PIO-Steuerung bleibt die CPU-Last minimal.
+                        <strong><i class="fas fa-tachometer-alt"></i> Performance Optimization:</strong><br>
+                        The triple-buffer system allows for simultaneous reading, processing, and writing. The latency is at most 1 line (64μs) plus processing time. With DMA transfer and PIO control, the CPU load remains minimal.
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3>4.4 PIO-Integration für Echtzeit-Steuerung</h3>
+                    <h3>4.4 PIO Integration for Real-time Control</h3>
                     <div class="code-block">
                         <pre>
-// PIO-Programm für synchronisierte Video-Verarbeitung
+// PIO program for synchronized video processing
 .program video_passthrough
 
-; Synchronisiert ADC-Eingang mit DAC-Ausgang
-; Nutzt Side-Set für präzise Timing-Kontrolle
+; Synchronizes ADC input with DAC output
+; Uses side-set for precise timing control
 
 start:
-    ; Warte auf H-Sync vom Eingang
-    wait 0 pin 0        ; ADC-Sync-Pin
+    ; Wait for H-Sync from input
+    wait 0 pin 0        ; ADC sync pin
     
-    ; Starte ADC-Sampling
-    set pins, 1 [31]    ; ADC-Enable
+    ; Start ADC sampling
+    set pins, 1 [31]    ; ADC enable
     
-    ; Warte auf Daten-Bereitschaft
-    wait 1 pin 1        ; ADC-Data-Ready
+    ; Wait for data readiness
+    wait 1 pin 1        ; ADC data-ready
     
-    ; Lese ADC-Daten und schreibe zu DAC
-    in pins, 8          ; 8-bit Daten vom ADC
-    out pins, 8         ; 8-bit Daten zum DAC
+    ; Read ADC data and write to DAC
+    in pins, 8          ; 8-bit data from ADC
+    out pins, 8         ; 8-bit data to DAC
     
-    ; Warte auf Zeilen-Ende
-    wait 1 pin 0        ; H-Sync-Ende
+    ; Wait for end of line
+    wait 1 pin 0        ; H-Sync end
     
-    jmp start           ; Nächste Zeile
+    jmp start           ; Next line
 
-; Timing-Konstanten
-LINE_TIME = 640        ; 64μs bei 10MHz
+; Timing constants
+LINE_TIME = 640        ; 64μs at 10MHz
 SYNC_TIME = 47         ; 4.7μs H-Sync
                         </pre>
                     </div>
 
                     <div class="warning-box">
-                        <strong><i class="fas fa-exclamation-triangle"></i> Kritische Timing-Aspekte:</strong><br>
-                        - ADC-Sampling muss mit Video-Sync synchronisiert sein<br>
-                        - DAC-Ausgabe darf ADC-Eingang nicht überschreiben<br>
-                        - DMA-Transfer muss zwischen Zeilen erfolgen<br>
-                        - Keine FIFO-Überläufe bei hohen Datenraten
+                        <strong><i class="fas fa-exclamation-triangle"></i> Critical Timing Aspects:</strong><br>
+                        - ADC sampling must be synchronized with video sync<br>
+                        - DAC output must not overwrite ADC input<br>
+                        - DMA transfer must occur between lines<br>
+                        - No FIFO overflows at high data rates
                     </div>
                 </div>
             </div>
@@ -1224,47 +1224,47 @@ SYNC_TIME = 47         ; 4.7μs H-Sync
             <div class="phase-header">
                 <h2 class="phase-title">
                     <i class="fas fa-lock phase-icon"></i>
-                    Phase 5: White Noise Stromchiffre
+                    Phase 5: White Noise Stream Cipher
                 </h2>
-                <p>Implementierung der XOR-basierten Verschlüsselung mit synchronisiertem PRNG</p>
+                <p>Implementation of XOR-based encryption with a synchronized PRNG</p>
             </div>
             <div class="phase-content">
                 <div class="section">
-                    <h3>5.1 Passwort-Handling und Key-Management</h3>
+                    <h3>5.1 Password Handling and Key Management</h3>
                     <div class="code-block">
                         <pre>
-// Kryptographische Konstanten und Schlüssel-Management
-#define KEY_LENGTH 64    // 64-bit Schlüssel
+// Cryptographic constants and key management
+#define KEY_LENGTH 64    // 64-bit key
 #define PRNG_SEED_LENGTH 128
 
-// Pre-Shared Key (wird vor Kompilieren festgelegt)
-const uint64_t PRESHARED_KEY = 0x123456789ABCDEF0ULL;  // Beispiel-Schlüssel
+// Pre-Shared Key (set before compiling)
+const uint64_t PRESHARED_KEY = 0x123456789ABCDEF0ULL;  // Example key
 
-// Globale PRNG-Zustände
+// Global PRNG states
 typedef struct {
-    uint64_t state[2];     // Xorshift128+ Zustand
-    uint64_t initial_seed; // Ursprünglicher Seed
-    uint32_t sync_counter; // Frame-Synchronisationszähler
+    uint64_t state[2];     // Xorshift128+ state
+    uint64_t initial_seed; // Original seed
+    uint32_t sync_counter; // Frame synchronization counter
 } prng_state_t;
 
 static prng_state_t encryption_prng;
 static prng_state_t decryption_prng;
 
-// PRNG mit Schlüssel initialisieren
+// Initialize PRNG with a key
 void init_prng_with_key(prng_state_t* prng, uint64_t key) {
-    // Mische Schlüssel für bessere Verteilung
+    // Mix key for better distribution
     prng->state[0] = key ^ 0xBF58476D1CE4E5B9ULL;
     prng->state[1] = key ^ 0x94D049BB133111EBULL;
     prng->initial_seed = key;
     prng->sync_counter = 0;
     
-    // Initialisiere PRNG mit mehreren Iterationen
+    // Initialize PRNG with several iterations
     for (int i = 0; i < 10; i++) {
         (void)xorshift128_plus(prng);
     }
 }
 
-// Xorshift128+ PRNG (sehr schnell, gute Qualität)
+// Xorshift128+ PRNG (very fast, good quality)
 static inline uint64_t xorshift128_plus(prng_state_t* prng) {
     uint64_t x = prng->state[0];
     uint64_t const y = prng->state[1];
@@ -1276,20 +1276,20 @@ static inline uint64_t xorshift128_plus(prng_state_t* prng) {
     return x + y;
 }
 
-// Einzelnes Byte verschlüsseln
+// Encrypt a single byte
 static inline uint8_t encrypt_byte(uint8_t plaintext, prng_state_t* prng) {
     uint8_t keystream = (uint8_t)(xorshift128_plus(prng) & 0xFF);
     return plaintext ^ keystream;
 }
 
-// Frame-Synchronisation (bei V-Sync)
+// Frame synchronization (at V-Sync)
 void sync_encryption_on_vsync(prng_state_t* prng) {
-    // PRNG auf Anfangszustand zurücksetzen
+    // Reset PRNG to initial state
     init_prng_with_key(prng, prng->initial_seed);
     prng->sync_counter++;
     
-    // Optional: Seed nach jedem Frame leicht verändern
-    if (prng->sync_counter % 60 == 0) {  // Alle 60 Frames (2 Sekunden)
+    // Optional: Slightly change seed after each frame
+    if (prng->sync_counter % 60 == 0) {  // Every 60 frames (2 seconds)
         prng->initial_seed ^= 0xAAAAAAAA55555555ULL;
     }
 }
@@ -1297,31 +1297,31 @@ void sync_encryption_on_vsync(prng_state_t* prng) {
                     </div>
 
                     <div class="warning-box">
-                        <strong><i class="fas fa-key"></i> Sicherheitshinweis:</strong><br>
-                        Der Pre-Shared Key muss vor der Kompilierung im Code festgelegt werden. Sender und Empfänger müssen exakt denselben Key verwenden. Der Key sollte aus einer kryptographisch sicheren Quelle generiert werden.
+                        <strong><i class="fas fa-key"></i> Security Note:</strong><br>
+                        The Pre-Shared Key must be set in the code before compilation. The transmitter and receiver must use the exact same key. The key should be generated from a cryptographically secure source.
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3>5.2 Verschlüsselungs-Kernel</h3>
+                    <h3>5.2 Encryption Kernel</h3>
                     <div class="code-block">
                         <pre>
-// Hochoptimierte Verschlüsselungs-Funktionen
-// Verarbeitet ganze Video-Zeilen in einem Durchlauf
+// Highly optimized encryption functions
+// Processes entire video lines in one pass
 
-// Verschlüsselungs-Funktion für Sender
+// Encryption function for transmitter
 void encrypt_video_line_sender(uint8_t* line_data, uint length) {
-    // Schnelle XOR-Verschlüsselung mit PRNG-Keystream
+    // Fast XOR encryption with PRNG keystream
     for (uint i = 0; i < length; i += 8) {
-        // 64-bit Keystream generieren
+        // Generate 64-bit keystream
         uint64_t keystream = xorshift128_plus(&encryption_prng);
         
-        // 8 Bytes auf einmal verschlüsseln
+        // Encrypt 8 bytes at once
         if (i + 8 <= length) {
             uint64_t* data_ptr = (uint64_t*)&line_data[i];
             *data_ptr ^= keystream;
         } else {
-            // Rest bytes einzeln verschlüsseln
+            // Encrypt remaining bytes individually
             uint8_t* key_bytes = (uint8_t*)&keystream;
             for (uint j = i; j < length; j++) {
                 line_data[j] ^= key_bytes[j - i];
@@ -1330,20 +1330,20 @@ void encrypt_video_line_sender(uint8_t* line_data, uint length) {
     }
 }
 
-// Entschlüsselungs-Funktion für Empfänger
+// Decryption function for receiver
 void decrypt_video_line_receiver(uint8_t* line_data, uint length) {
-    // Identische Funktion wie Verschlüsselung (XOR ist symmetrisch)
-    encrypt_video_line_sender(line_data, length);  // Reuse der Funktion
+    // Identical function to encryption (XOR is symmetric)
+    encrypt_video_line_sender(line_data, length);  // Reuse the function
 }
 
-// Alternative: Byte-weise Verschlüsselung für kleinere Buffer
+// Alternative: Byte-wise encryption for smaller buffers
 void encrypt_video_line_bytewise(uint8_t* line_data, uint length) {
     for (uint i = 0; i < length; i++) {
         line_data[i] ^= (uint8_t)xorshift128_plus(&encryption_prng);
     }
 }
 
-// Schnelle 32-bit Version für bessere Performance
+// Fast 32-bit version for better performance
 void encrypt_video_line_32bit(uint8_t* line_data, uint length) {
     uint32_t* data_32 = (uint32_t*)line_data;
     uint len_32 = length / 4;
@@ -1353,7 +1353,7 @@ void encrypt_video_line_32bit(uint8_t* line_data, uint length) {
         data_32[i] ^= keystream;
     }
     
-    // Rest bytes
+    // Remaining bytes
     uint remainder = length % 4;
     if (remainder > 0) {
         uint8_t* remaining_data = line_data + (len_32 * 4);
@@ -1367,73 +1367,73 @@ void encrypt_video_line_32bit(uint8_t* line_data, uint length) {
                 </div>
 
                 <div class="section">
-                    <h3>5.3 Frame-Synchronisationslogik</h3>
+                    <h3>5.3 Frame Synchronization Logic</h3>
                     <div class="code-block">
                         <pre>
-// Kritische Synchronisations-Funktionen
-// MÜSSEN bei jedem V-Sync aufgerufen werden
+// Critical synchronization functions
+// MUST be called on every V-Sync
 
-// Sender-Synchronisation
+// Transmitter synchronization
 void sender_vsync_handler(void) {
-    // Stoppe aktuelle Verarbeitung
+    // Stop current processing
     dma_channel_abort(ADC_DMA_CHAN);
     
-    // Resynchronisiere PRNG
+    // Resynchronize PRNG
     sync_encryption_on_vsync(&encryption_prng);
     
-    // Zähler zurücksetzen
+    // Reset counter
     current_line = 0;
     encryption_prng.sync_counter++;
     
-    // Signalisiere neuen Frame
+    // Signal new frame
     frame_sync_flag = true;
     
-    // Optional: Logging für Debugging
+    // Optional: Logging for debugging
     if (debug_mode) {
         printf("Sender V-Sync: Frame %d\n", encryption_prng.sync_counter);
     }
 }
 
-// Empfänger-Synchronisation
+// Receiver synchronization
 void receiver_vsync_handler(void) {
-    // Stoppe aktuelle Ausgabe
+    // Stop current output
     dma_channel_abort(DAC_DMA_CHAN);
     
-    // Resynchronisiere PRNG (MUSSS mit Sender übereinstimmen)
+    // Resynchronize PRNG (MUST match transmitter)
     sync_encryption_on_vsync(&decryption_prng);
     
-    // Zähler zurücksetzen
+    // Reset counter
     current_line = 0;
     decryption_prng.sync_counter++;
     
-    // Signalisiere neuen Frame
+    // Signal new frame
     frame_sync_flag = true;
     
-    // Optional: Sync-Fehler-Detektion
+    // Optional: Sync error detection
     if (abs(decryption_prng.sync_counter - encryption_prng.sync_counter) > 1) {
-        // Sync-Fehler erkannt
+        // Sync error detected
         handle_sync_error();
     }
 }
 
-// Sync-Fehler-Behandlung
+// Sync error handling
 void handle_sync_error(void) {
-    // Versuche Resynchronisation
+    // Attempt resynchronization
     decryption_prng.sync_counter = encryption_prng.sync_counter;
     
-    // Setze beide PRNGs auf gleichen Zustand
+    // Set both PRNGs to the same state
     init_prng_with_key(&decryption_prng, PRESHARED_KEY);
     init_prng_with_key(&encryption_prng, PRESHARED_KEY);
     
-    // Zähle Sync-Fehler
+    // Count sync errors
     sync_error_count++;
     
     if (debug_mode) {
-        printf("Sync-Fehler behoben, Zähler: %d\n", sync_error_count);
+        printf("Sync error fixed, counter: %d\n", sync_error_count);
     }
 }
 
-// Synchronisations-Status überprüfen
+// Check synchronization status
 bool check_sync_status(void) {
     return (encryption_prng.sync_counter == decryption_prng.sync_counter) &&
            (sync_error_count == 0);
@@ -1442,61 +1442,61 @@ bool check_sync_status(void) {
                     </div>
 
                     <div class="warning-box">
-                        <strong><i class="fas fa-exclamation-triangle"></i> KRITISCH:</strong><br>
-                        Die Synchronisationslogik ist das Herzstück des Systems. Jeder V-Sync MUSS beide PRNGs auf exakt denselben Zustand zurücksetzen. Ein einziger Fehler führt zu dauerhafter Entschlüsselungsstörung.
+                        <strong><i class="fas fa-exclamation-triangle"></i> CRITICAL:</strong><br>
+                        The synchronization logic is the heart of the system. Every V-Sync MUST reset both PRNGs to the exact same state. A single error will lead to permanent decryption failure.
                     </div>
                 </div>
 
                 <div class="section">
-                    <h3>5.4 Integration in Video-Verarbeitung</h3>
+                    <h3>5.4 Integration into Video Processing</h3>
                     <div class="code-block">
                         <pre>
-// Vollständige Video-Verarbeitung mit Verschlüsselung
-// Sender-Seite
+// Complete video processing with encryption
+// Transmitter side
 void process_video_line_sender(uint8_t* line_data, uint length) {
-    // 1. Video-Daten vom ADC lesen (bereits geschehen)
+    // 1. Read video data from ADC (already done)
     
-    // 2. Verschlüsselung anwenden
+    // 2. Apply encryption
     encrypt_video_line_32bit(line_data, length);
     
-    // 3. Verschlüsselte Daten in Ausgabe-Buffer
+    // 3. Place encrypted data in output buffer
     memcpy(tx_buffer, line_data, length);
     
-    // 4. Signalisiere bereit für Ausgabe
+    // 4. Signal ready for output
     tx_buffer_ready = true;
 }
 
-// Empfänger-Seite
+// Receiver side
 void process_video_line_receiver(uint8_t* line_data, uint length) {
-    // 1. Verschlüsselte Daten empfangen
+    // 1. Receive encrypted data
     memcpy(rx_buffer, line_data, length);
     
-    // 2. Entschlüsselung anwenden
+    // 2. Apply decryption
     decrypt_video_line_receiver(rx_buffer, length);
     
-    // 3. Bereinigte Daten ausgeben
+    // 3. Output cleaned data
     output_video_line(rx_buffer, length);
 }
 
-// Haupt-Verarbeitungsschleife mit Verschlüsselung
+// Main processing loop with encryption
 void encrypted_video_loop(void) {
     while (true) {
-        // Sender-Verarbeitung (Core 0)
+        // Transmitter processing (Core 0)
         if (new_line_available_sender()) {
             uint8_t* line_data = get_input_line_buffer();
             process_video_line_sender(line_data, VIDEO_WIDTH);
         }
         
-        // Empfänger-Verarbeitung (Core 1)
+        // Receiver processing (Core 1)
         if (new_line_available_receiver()) {
             uint8_t* line_data = get_received_line_buffer();
             process_video_line_receiver(line_data, VIDEO_WIDTH);
         }
         
-        // V-Sync-Behandlung
+        // V-Sync handling
         if (vsync_detected) {
             sender_vsync_handler();
-            // Empfänger wird über Funkstrecke synchronisiert
+            // Receiver is synchronized via radio link
         }
     }
 }
@@ -1504,11 +1504,11 @@ void encrypted_video_loop(void) {
                     </div>
 
                     <div class="info-box">
-                        <strong><i class="fas fa-shield-alt"></i> Sicherheitsmerkmale:</strong><br>
-                        - One-Time-Pad-Emulation durch Frame-basierte PRNG-Resynchronisation<br>
-                        - Deterministische Keystream-Generierung<br>
-                        - Keine Speicherung des Keystreams (nur Zustand)<br>
-                        - Frame-Synchronisation als zusätzliche Sicherheitsebene
+                        <strong><i class="fas fa-shield-alt"></i> Security Features:</strong><br>
+                        - One-Time-Pad emulation through frame-based PRNG resynchronization<br>
+                        - Deterministic keystream generation<br>
+                        - No storage of the keystream (only state)<br>
+                        - Frame synchronization as an additional security layer
                     </div>
                 </div>
             </div>
@@ -1518,17 +1518,17 @@ void encrypted_video_loop(void) {
             <div class="phase-header">
                 <h2 class="phase-title">
                     <i class="fas fa-cogs phase-icon"></i>
-                    Phase 6: Finale Systemintegration
+                    Phase 6: Final System Integration
                 </h2>
-                <p>Komplette Sender- und Empfänger-Firmware mit Test-Framework</p>
+                <p>Complete transmitter and receiver firmware with test framework</p>
             </div>
             <div class="phase-content">
                 <div class="section">
-                    <h3>6.1 Sender-Firmware</h3>
+                    <h3>6.1 Transmitter Firmware</h3>
                     <div class="code-block">
                         <pre>
-// PicoCrypt FPV - Sender Firmware
-// Vollständige Implementierung mit allen Komponenten
+// PicoCrypt FPV - Transmitter Firmware
+// Complete implementation with all components
 
 #include "pico/stdlib.h"
 #include "hardware/pio.h"
@@ -1536,26 +1536,26 @@ void encrypted_video_loop(void) {
 #include "hardware/adc.h"
 #include "pico/multicore.h"
 
-// ===== KONFIGURATION =====
-#define PRESHARED_KEY   0x123456789ABCDEF0ULL  // 64-bit Schlüssel
+// ===== CONFIGURATION =====
+#define PRESHARED_KEY   0x123456789ABCDEF0ULL  // 64-bit key
 #define VIDEO_WIDTH     720
 #define VIDEO_HEIGHT    576
 #define SAMPLE_RATE     10000000  // 10MS/s
 
-// ===== GLOBALE VARIABLEN =====
+// ===== GLOBAL VARIABLES =====
 static uint8_t video_buffer[VIDEO_WIDTH];
 static uint8_t encrypted_buffer[VIDEO_WIDTH];
 static prng_state_t sender_prng;
 static volatile bool new_frame = false;
 static volatile uint32_t line_counter = 0;
 
-// ===== KRYPTOGRAPHIE =====
+// ===== CRYPTOGRAPHY =====
 void init_encryption(void) {
     init_prng_with_key(&sender_prng, PRESHARED_KEY);
 }
 
 void encrypt_line(uint8_t* input, uint8_t* output, uint length) {
-    // Schnelle 32-bit XOR-Verschlüsselung
+    // Fast 32-bit XOR encryption
     uint32_t* in_32 = (uint32_t*)input;
     uint32_t* out_32 = (uint32_t*)output;
     uint len_32 = length / 4;
@@ -1565,7 +1565,7 @@ void encrypt_line(uint8_t* input, uint8_t* output, uint length) {
         out_32[i] = in_32[i] ^ keystream;
     }
     
-    // Rest bytes
+    // Remaining bytes
     uint remainder = length % 4;
     if (remainder > 0) {
         uint8_t* in_rem = input + (len_32 * 4);
@@ -1576,15 +1576,15 @@ void encrypt_line(uint8_t* input, uint8_t* output, uint length) {
     }
 }
 
-// ===== VIDEO-EINGABE (Core 0) =====
+// ===== VIDEO INPUT (Core 0) =====
 void core0_video_input(void) {
-    // ADC-Initialisierung
+    // ADC initialization
     adc_init();
     adc_gpio_init(26);  // ADC Pin 26
     adc_select_input(0);
     adc_set_clkdiv(0);  // Max Speed
     
-    // DMA für ADC
+    // DMA for ADC
     int adc_dma_chan = dma_claim_unused_channel(true);
     dma_channel_config c = dma_channel_get_default_config(adc_dma_chan);
     channel_config_set_transfer_data_size(&c, DMA_SIZE_8);
@@ -1592,58 +1592,58 @@ void core0_video_input(void) {
     channel_config_set_write_increment(&c, true);
     channel_config_set_dreq(&c, DREQ_ADC);
     
-    // PIO für Sync-Erkennung
+    // PIO for sync detection
     PIO pio = pio0;
     uint sm = pio_claim_unused_sm(pio, true);
     init_pio_sync_detection(pio, sm);
     
     while (true) {
-        // Warte auf H-Sync
+        // Wait for H-Sync
         if (pio_interrupt_get(pio, sm)) {
             pio_interrupt_clear(pio, sm);
             
-            // Neue Zeile einlesen
+            // Read new line
             dma_channel_configure(adc_dma_chan, &c, 
                 video_buffer, &adc_hw->fifo, VIDEO_WIDTH, true);
             
-            // Warte auf DMA-Completion
+            // Wait for DMA completion
             dma_channel_wait_for_finish_blocking(adc_dma_chan);
             
-            // Verschlüsseln
+            // Encrypt
             encrypt_line(video_buffer, encrypted_buffer, VIDEO_WIDTH);
             
-            // An Core 1 senden
+            // Send to Core 1
             multicore_fifo_push_blocking((uint32_t)encrypted_buffer);
             
             line_counter++;
         }
         
-        // V-Sync-Behandlung
+        // V-Sync handling
         if (pio_interrupt_get(pio, 1)) {
             pio_interrupt_clear(pio, 1);
             
-            // PRNG resynchronisieren
+            // Resynchronize PRNG
             sync_encryption_on_vsync(&sender_prng);
             line_counter = 0;
             new_frame = true;
             
-            // V-Sync-Signal an Core 1
+            // V-Sync signal to Core 1
             multicore_fifo_push_blocking(VSYNC_MARKER);
         }
     }
 }
 
-// ===== VIDEO-AUSGABE (Core 1) =====
+// ===== VIDEO OUTPUT (Core 1) =====
 void core1_video_output(void) {
-    // R-2R DAC-Initialisierung
+    // R-2R DAC initialization
     init_r2r_dac();
     
-    // PIO für Video-Ausgabe
+    // PIO for video output
     PIO pio = pio1;
     uint sm = pio_claim_unused_sm(pio, true);
     init_pio_video_output(pio, sm);
     
-    // DMA für DAC-Ausgabe
+    // DMA for DAC output
     int dac_dma_chan = dma_claim_unused_channel(true);
     dma_channel_config c = dma_channel_get_default_config(dac_dma_chan);
     channel_config_set_transfer_data_size(&c, DMA_SIZE_8);
@@ -1655,30 +1655,30 @@ void core1_video_output(void) {
         uint32_t data = multicore_fifo_pop_blocking();
         
         if (data == VSYNC_MARKER) {
-            // V-Sync behandeln
+            // Handle V-Sync output
             handle_vsync_output();
         } else {
-            // Verschlüsselte Daten empfangen
+            // Receive encrypted data
             uint8_t* encrypted_data = (uint8_t*)data;
             
-            // Direkt an DAC ausgeben (keine weitere Verarbeitung am Sender)
+            // Output directly to DAC (no further processing on transmitter)
             dma_channel_configure(dac_dma_chan, &c,
                 &pio1_hw->txf[0], encrypted_data, VIDEO_WIDTH, true);
         }
     }
 }
 
-// ===== HAUPTPROGRAMM =====
+// ===== MAIN PROGRAM =====
 int main() {
     stdio_init_all();
     
-    // Initialisierungen
+    // Initializations
     init_encryption();
     
-    // Core 1 starten
+    // Start Core 1
     multicore_launch_core1(core1_video_output);
     
-    // Core 0: Video-Eingabe
+    // Core 0: Video Input
     core0_video_input();
     
     return 0;
@@ -1688,23 +1688,23 @@ int main() {
                 </div>
 
                 <div class="section">
-                    <h3>6.2 Empfänger-Firmware</h3>
+                    <h3>6.2 Receiver Firmware</h3>
                     <div class="code-block">
                         <pre>
-// PicoCrypt FPV - Empfänger Firmware
-// Fast identisch zum Sender, aber mit Entschlüsselung
+// PicoCrypt FPV - Receiver Firmware
+// Almost identical to transmitter, but with decryption
 
 #include "pico/stdlib.h"
 #include "hardware/pio.h"
 #include "hardware/dma.h"
 #include "pico/multicore.h"
 
-// ===== KONFIGURATION =====
-#define PRESHARED_KEY   0x123456789ABCDEF0ULL  // MUSS mit Sender übereinstimmen!
+// ===== CONFIGURATION =====
+#define PRESHARED_KEY   0x123456789ABCDEF0ULL  // MUST match transmitter!
 #define VIDEO_WIDTH     720
 #define VIDEO_HEIGHT    576
 
-// ===== KRYPTOGRAPHIE =====
+// ===== CRYPTOGRAPHY =====
 static prng_state_t receiver_prng;
 
 void init_decryption(void) {
@@ -1712,7 +1712,7 @@ void init_decryption(void) {
 }
 
 void decrypt_line(uint8_t* input, uint8_t* output, uint length) {
-    // Identische Funktion wie Verschlüsselung (XOR ist symmetrisch)
+    // Identical function to encryption (XOR is symmetric)
     uint32_t* in_32 = (uint32_t*)input;
     uint32_t* out_32 = (uint32_t*)output;
     uint len_32 = length / 4;
@@ -1722,7 +1722,7 @@ void decrypt_line(uint8_t* input, uint8_t* output, uint length) {
         out_32[i] = in_32[i] ^ keystream;
     }
     
-    // Rest bytes
+    // Remaining bytes
     uint remainder = length % 4;
     if (remainder > 0) {
         uint8_t* in_rem = input + (len_32 * 4);
@@ -1733,37 +1733,37 @@ void decrypt_line(uint8_t* input, uint8_t* output, uint length) {
     }
 }
 
-// ===== DATEN-EMPFANG (Core 0) =====
+// ===== DATA RECEPTION (Core 0) =====
 void core0_data_receiver(void) {
-    // Video-Eingang vom Sender (über Funkstrecke)
-    // Hier würde die Funk-Kommunikation stattfinden
-    // Für Testzwwecke: Direkte Verbindung
+    // Video input from transmitter (via radio link)
+    // Radio communication would happen here
+    // For testing purposes: Direct connection
     
     while (true) {
-        // Warte auf Daten vom Sender
-        // (In echter Implementierung: SPI, UART, oder Funk-Modul)
+        // Wait for data from transmitter
+        // (In a real implementation: SPI, UART, or radio module)
         
-        // Beispiel: Daten von Sender empfangen
+        // Example: receive data from transmitter
         uint8_t* received_data = receive_video_data();
         
-        // An Core 1 weiterleiten
+        // Forward to Core 1
         multicore_fifo_push_blocking((uint32_t)received_data);
     }
 }
 
-// ===== ENTSCHLÜSSELUNG & AUSGABE (Core 1) =====
+// ===== DECRYPTION & OUTPUT (Core 1) =====
 void core1_decrypt_output(void) {
     uint8_t decrypted_buffer[VIDEO_WIDTH];
     
-    // R-2R DAC-Initialisierung
+    // R-2R DAC initialization
     init_r2r_dac();
     
-    // PIO für Video-Ausgabe
+    // PIO for video output
     PIO pio = pio1;
     uint sm = pio_claim_unused_sm(pio, true);
     init_pio_video_output(pio, sm);
     
-    // DMA für DAC-Ausgabe
+    // DMA for DAC output
     int dac_dma_chan = dma_claim_unused_channel(true);
     dma_channel_config c = dma_channel_get_default_config(dac_dma_chan);
     channel_config_set_transfer_data_size(&c, DMA_SIZE_8);
@@ -1775,34 +1775,34 @@ void core1_decrypt_output(void) {
         uint32_t data = multicore_fifo_pop_blocking();
         
         if (data == VSYNC_MARKER) {
-            // V-Sync resynchronisieren
+            // Resynchronize on V-Sync
             sync_encryption_on_vsync(&receiver_prng);
             handle_vsync_output();
         } else {
-            // Verschlüsselte Daten empfangen
+            // Receive encrypted data
             uint8_t* encrypted_data = (uint8_t*)data;
             
-            // Entschlüsseln
+            // Decrypt
             decrypt_line(encrypted_data, decrypted_buffer, VIDEO_WIDTH);
             
-            // Entschlüsselte Daten ausgeben
+            // Output decrypted data
             dma_channel_configure(dac_dma_chan, &c,
                 &pio1_hw->txf[0], decrypted_buffer, VIDEO_WIDTH, true);
         }
     }
 }
 
-// ===== HAUPTPROGRAMM =====
+// ===== MAIN PROGRAM =====
 int main() {
     stdio_init_all();
     
-    // Initialisierungen
+    // Initializations
     init_decryption();
     
-    // Core 1 starten (Entschlüsselung & Ausgabe)
+    // Start Core 1 (Decryption & Output)
     multicore_launch_core1(core1_decrypt_output);
     
-    // Core 0: Daten-Empfang
+    // Core 0: Data Reception
     core0_data_receiver();
     
     return 0;
@@ -1812,12 +1812,12 @@ int main() {
                 </div>
 
                 <div class="section">
-                    <h3>6.3 Test-Framework und Debugging</h3>
+                    <h3>6.3 Test Framework and Debugging</h3>
                     <div class="code-block">
                         <pre>
-// Test- und Debug-Funktionen für das PicoCrypt FPV System
+// Test and debug functions for the PicoCrypt FPV System
 
-// Performance-Monitoring
+// Performance monitoring
 typedef struct {
     uint32_t frame_count;
     uint32_t line_count;
@@ -1830,12 +1830,12 @@ typedef struct {
 
 static performance_stats_t system_stats;
 
-// Initialisiere Performance-Tracking
+// Initialize performance tracking
 void init_performance_monitoring(void) {
     memset(&system_stats, 0, sizeof(system_stats));
 }
 
-// Latenz-Messung pro Zeile
+// Measure latency per line
 void measure_line_latency(uint32_t start_time) {
     uint32_t end_time = time_us_32();
     uint32_t latency = end_time - start_time;
@@ -1847,52 +1847,52 @@ void measure_line_latency(uint32_t start_time) {
         system_stats.max_latency_us = latency;
     }
     
-    // Berechne Durchschnitt alle 100 Zeilen
+    // Calculate average every 100 lines
     if (system_stats.line_count % 100 == 0) {
         system_stats.avg_latency_us = system_stats.total_processing_time / 100;
         system_stats.total_processing_time = 0;
     }
 }
 
-// Frame-Statistiken aktualisieren
+// Update frame statistics
 void update_frame_stats(void) {
     system_stats.frame_count++;
     
-    // Ausgabe alle 60 Frames (ca. jede 2 Sekunden)
+    // Output every 60 frames (approx. every 2 seconds)
     if (system_stats.frame_count % 60 == 0) {
         print_performance_report();
     }
 }
 
-// Performance-Report ausgeben
+// Print performance report
 void print_performance_report(void) {
     printf("\n=== PicoCrypt FPV Performance Report ===\n");
-    printf("Frames verarbeitet: %d\n", system_stats.frame_count);
-    printf("Zeilen verarbeitet: %d\n", system_stats.line_count);
-    printf("Maximale Latenz: %d μs\n", system_stats.max_latency_us);
-    printf("Durchschnittliche Latenz: %d μs\n", system_stats.avg_latency_us);
-    printf("Sync-Fehler: %d\n", system_stats.sync_errors);
-    printf("Verschlüsselungs-Fehler: %d\n", system_stats.encryption_errors);
+    printf("Frames processed: %d\n", system_stats.frame_count);
+    printf("Lines processed: %d\n", system_stats.line_count);
+    printf("Maximum latency: %d μs\n", system_stats.max_latency_us);
+    printf("Average latency: %d μs\n", system_stats.avg_latency_us);
+    printf("Sync errors: %d\n", system_stats.sync_errors);
+    printf("Encryption errors: %d\n", system_stats.encryption_errors);
     printf("========================================\n\n");
 }
 
-// Test-Pattern-Generierung für Debugging
+// Test pattern generation for debugging
 void generate_test_pattern(uint8_t* buffer, uint pattern_type) {
     switch (pattern_type) {
-        case 0:  // Farbbalken
+        case 0:  // Color bars
             for (int i = 0; i < VIDEO_WIDTH; i++) {
                 int bar = (i * 8) / VIDEO_WIDTH;
                 buffer[i] = 0xFF >> bar;
             }
             break;
             
-        case 1:  // Graukeil
+        case 1:  // Grayscale wedge
             for (int i = 0; i < VIDEO_WIDTH; i++) {
                 buffer[i] = (i * 255) / VIDEO_WIDTH;
             }
             break;
             
-        case 2:  // Checkboard-Muster
+        case 2:  // Checkerboard pattern
             for (int y = 0; y < 10; y++) {
                 for (int x = 0; x < VIDEO_WIDTH; x++) {
                     int pos = y * VIDEO_WIDTH + x;
@@ -1901,23 +1901,23 @@ void generate_test_pattern(uint8_t* buffer, uint pattern_type) {
             }
             break;
             
-        default:  // Weiß
+        default:  // White
             memset(buffer, 0xFF, VIDEO_WIDTH);
     }
 }
 
-// Verschlüsselungs-Test
+// Encryption test
 bool test_encryption_consistency(void) {
     uint8_t test_data[256];
     uint8_t encrypted[256];
     uint8_t decrypted[256];
     
-    // Test-Daten generieren
+    // Generate test data
     for (int i = 0; i < 256; i++) {
         test_data[i] = i;
     }
     
-    // Verschlüsseln
+    // Encrypt
     prng_state_t test_prng;
     init_prng_with_key(&test_prng, PRESHARED_KEY);
     
@@ -1925,17 +1925,17 @@ bool test_encryption_consistency(void) {
         encrypted[i] = test_data[i] ^ (uint8_t)xorshift128_plus(&test_prng);
     }
     
-    // Zurücksetzen und entschlüsseln
+    // Reset and decrypt
     init_prng_with_key(&test_prng, PRESHARED_KEY);
     
     for (int i = 0; i < 256; i++) {
         decrypted[i] = encrypted[i] ^ (uint8_t)xorshift128_plus(&test_prng);
     }
     
-    // Vergleichen
+    // Compare
     bool success = (memcmp(test_data, decrypted, 256) == 0);
     
-    printf("Verschlüsselungs-Test: %s\n", success ? "OK" : "FEHLER");
+    printf("Encryption Test: %s\n", success ? "OK" : "FAIL");
     
     if (!success) {
         system_stats.encryption_errors++;
@@ -1944,38 +1944,38 @@ bool test_encryption_consistency(void) {
     return success;
 }
 
-// System-Selbsttest
+// System self-test
 void run_system_selftest(void) {
-    printf("Starte PicoCrypt FPV Selbsttest...\n");
+    printf("Starting PicoCrypt FPV self-test...\n");
     
-    // Test 1: Verschlüsselungskonsistenz
+    // Test 1: Encryption consistency
     bool crypto_ok = test_encryption_consistency();
     
-    // Test 2: ADC/DAC-Verbindung
+    // Test 2: ADC/DAC connection
     bool adc_dac_ok = test_adc_dac_connection();
     
-    // Test 3: PIO-Timing
+    // Test 3: PIO timing
     bool pio_ok = test_pio_timing();
     
-    // Test 4: DMA-Transfer
+    // Test 4: DMA transfer
     bool dma_ok = test_dma_transfer();
     
-    // Test 5: Dual-Core-Kommunikation
+    // Test 5: Dual-core communication
     bool multicore_ok = test_multicore_comms();
     
-    // Ergebnis
-    printf("\n=== SELBSTTEST-ERGEBNIS ===\n");
-    printf("Verschlüsselung: %s\n", crypto_ok ? "OK" : "FEHLER");
-    printf("ADC/DAC: %s\n", adc_dac_ok ? "OK" : "FEHLER");
-    printf("PIO-Timing: %s\n", pio_ok ? "OK" : "FEHLER");
-    printf("DMA-Transfer: %s\n", dma_ok ? "OK" : "FEHLER");
-    printf("Multicore: %s\n", multicore_ok ? "OK" : "FEHLER");
+    // Result
+    printf("\n=== SELF-TEST RESULT ===\n");
+    printf("Encryption: %s\n", crypto_ok ? "OK" : "FAIL");
+    printf("ADC/DAC: %s\n", adc_dac_ok ? "OK" : "FAIL");
+    printf("PIO Timing: %s\n", pio_ok ? "OK" : "FAIL");
+    printf("DMA Transfer: %s\n", dma_ok ? "OK" : "FAIL");
+    printf("Multicore: %s\n", multicore_ok ? "OK" : "FAIL");
     printf("===========================\n");
     
     if (crypto_ok && adc_dac_ok && pio_ok && dma_ok && multicore_ok) {
-        printf("Sämtliche Tests BESTANDEN! System betriebsbereit.\n");
+        printf("All tests PASSED! System ready for operation.\n");
     } else {
-        printf("WARNUNG: Einige Tests FEHLGESCHLAGEN!\n");
+        printf("WARNING: Some tests FAILED!\n");
     }
 }
                         </pre>
@@ -1983,48 +1983,48 @@ void run_system_selftest(void) {
                 </div>
 
                 <div class="section">
-                    <h3>6.4 Teststrategie und Fehlerbehebung</h3>
+                    <h3>6.4 Test Strategy and Troubleshooting</h3>
                     
                     <div class="info-box">
-                        <strong><i class="fas fa-vial"></i> Schrittweise Test-Prozedur:</strong>
+                        <strong><i class="fas fa-vial"></i> Step-by-Step Test Procedure:</strong>
                     </div>
 
-                    <h4>Testphase 1: Grundfunktionen</h4>
+                    <h4>Test Phase 1: Basic Functions</h4>
                     <ul>
-                        <li><strong>Video-Ausgabe-Test:</strong> Farbbalken ohne Verschlüsselung</li>
-                        <li><strong>ADC-Test:</strong> Eingabe-Signal korrekt darstellen</li>
-                        <li><strong>Passthrough-Test:</strong> Video durch das System ohne Verschlüsselung</li>
+                        <li><strong>Video Output Test:</strong> Color bars without encryption</li>
+                        <li><strong>ADC Test:</strong> Correctly display input signal</li>
+                        <li><strong>Passthrough Test:</strong> Video through the system without encryption</li>
                     </ul>
 
-                    <h4>Testphase 2: Verschlüsselung</h4>
+                    <h4>Test Phase 2: Encryption</h4>
                     <ul>
-                        <li><strong>Statischer Test:</strong> Gleicher Key, beide Module</li>
-                        <li><strong>Dynamischer Test:</strong> Bewegtbild mit Verschlüsselung</li>
-                        <li><strong>Sync-Test:</strong> V-Sync-Resynchronisation überprüfen</li>
+                        <li><strong>Static Test:</strong> Same key, both modules</li>
+                        <li><strong>Dynamic Test:</strong> Moving picture with encryption</li>
+                        <li><strong>Sync Test:</strong> Verify V-Sync resynchronization</li>
                     </ul>
 
-                    <h4>Testphase 3: System-Integration</h4>
+                    <h4>Test Phase 3: System Integration</h4>
                     <ul>
-                        <li><strong>Kabel-Test:</strong> Direkte Verbindung Sender-Empfänger</li>
-                        <li><strong>Funk-Test:</strong> Übertragung über Funkstrecke</li>
-                        <li><strong>Langzeit-Test:</strong> 24h Dauerbetrieb</li>
+                        <li><strong>Cable Test:</strong> Direct connection between transmitter and receiver</li>
+                        <li><strong>Radio Test:</strong> Transmission over radio link</li>
+                        <li><strong>Long-Term Test:</strong> 24h continuous operation</li>
                     </ul>
 
                     <div class="warning-box">
-                        <strong><i class="fas fa-tools"></i> Debugging-Hinweise:</strong><br>
-                        - Bei Sync-Fehlern: V-Sync-Signale mit Oszilloskop prüfen<br>
-                        - Bei Bildstörungen: PRNG-Zustände vergleichen<br>
-                        - Bei Latenz-Problemen: DMA- und PIO-Statistiken analysieren<br>
-                        - Bei Verschlüsselungsfehlern: Test-Pattern verwenden
+                        <strong><i class="fas fa-tools"></i> Debugging Notes:</strong><br>
+                        - For sync errors: Check V-Sync signals with an oscilloscope<br>
+                        - For image distortions: Compare PRNG states<br>
+                        - For latency issues: Analyze DMA and PIO statistics<br>
+                        - For encryption errors: Use test patterns
                     </div>
 
                     <div class="success-box">
-                        <strong><i class="fas fa-check-circle"></i> Erfolgskriterien:</strong><br>
-                        - Stabiles Bild ohne Artefakte<br>
-                        - Korrekte Verschlüsselung/Entschlüsselung<br>
-                        - Latenz <1ms pro Zeile<br>
-                        - Keine Frame-Drops bei 25fps<br>
-                        - 24h Dauerbetrieb ohne Fehler
+                        <strong><i class="fas fa-check-circle"></i> Success Criteria:</strong><br>
+                        - Stable image without artifacts<br>
+                        - Correct encryption/decryption<br>
+                        - Latency <1ms per line<br>
+                        - No frame drops at 25fps<br>
+                        - 24h continuous operation without errors
                     </div>
                 </div>
             </div>
@@ -2033,17 +2033,17 @@ void run_system_selftest(void) {
 
     <div class="download-section">
         <div class="container">
-            <h2><i class="fas fa-download"></i> Projekt-Downloads</h2>
-            <p>Vollständige Projektdateien, Schaltpläne und Dokumentation</p>
-            <a href="#" class="download-btn"><i class="fas fa-file-code"></i> Firmware-Code (C/C++)</a>
-            <a href="#" class="download-btn"><i class="fas fa-microchip"></i> Schaltpläne (KiCad)</a>
-            <a href="#" class="download-btn"><i class="fas fa-book"></i> Bauteilliste</a>
-            <a href="#" class="download-btn"><i class="fas fa-file-pdf"></i> Vollständige Dokumentation</a>
+            <h2><i class="fas fa-download"></i> Project Downloads</h2>
+            <p>Complete project files, schematics, and documentation</p>
+            <a href="#" class="download-btn"><i class="fas fa-file-code"></i> Firmware Code (C/C++)</a>
+            <a href="#" class="download-btn"><i class="fas fa-microchip"></i> Schematics (KiCad)</a>
+            <a href="#" class="download-btn"><i class="fas fa-book"></i> Bill of Materials</a>
+            <a href="#" class="download-btn"><i class="fas fa-file-pdf"></i> Complete Documentation</a>
         </div>
     </div>
 
     <script>
-        // Smooth scrolling für interne Links
+        // Smooth scrolling for internal links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -2053,7 +2053,7 @@ void run_system_selftest(void) {
             });
         });
 
-        // Aktuellen Abschnitt im TOC hervorheben
+        // Highlight current section in TOC
         window.addEventListener('scroll', function() {
             let current = '';
             const sections = document.querySelectorAll('.phase');
